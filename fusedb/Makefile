@@ -21,7 +21,7 @@ OBJ=$(patsubst %.cpp, %.o, $(SRC))
 EXE=$(patsubst %.cpp, %,   $(SRC))
 endif
 
-	
+
 build: $(SRC)
 ifeq (,$(findstring .h, $(SRC)))
 	$(CXX) $(CXXFLAGS) $(SRC) -o $(EXE) $(LIBS)
@@ -33,5 +33,7 @@ endif
 
 fusedb:	fusedb.o movies.o
 	$(CXX)  $(CXXFLAGS) fusedb.o movies.o -o fusedb $(LIBS)
-	
 
+clean:
+	rm fusedb.o movies.o
+	rm echo read fusedb

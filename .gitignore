@@ -1,0 +1,8 @@
+fusedb/echo
+fusedb/fusedb
+fusedb/readi
+fusedb/nsert
+
+*~
+fusedb/#*#
+fusedb/*.o
