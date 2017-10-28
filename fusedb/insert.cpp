@@ -17,7 +17,7 @@ void insert(mysqlpp::Connection& myDB,
 
 int main(int argc, char *argv[]) {
     // Connect to database with: database, server, userID, password
-    mysqlpp::Connection myDB("cse381", "localhost", "cse381", "FIX");
+    mysqlpp::Connection myDB("cse381", "localhost", "cse381", "m1am1");
 
 	insert(myDB,"sherrie",2);
     // Create a query 
