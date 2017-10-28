@@ -5,7 +5,7 @@
 
 mysqlpp::Query connect() {
     // Connect to database with: database, server, userID, password
-    mysqlpp::Connection myDB("cse381", "localhost", "cse381", "FIXME");
+    mysqlpp::Connection myDB("cse381", "localhost", "cse381", "m1am1");
     // Create a query 
     mysqlpp::Query query = myDB.query();
 

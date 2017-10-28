@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 	(void) argc;
 	(void) argv;
     // Connect to database with: database, server, userID, password
-    mysqlpp::Connection myDB("cse381", "localhost", "cse381", "FIX");
+    mysqlpp::Connection myDB("cse381", "localhost", "cse381", "m1am1");
     // Create a query 
     mysqlpp::Query query = myDB.query();
     query << "SELECT pk,name from test";
