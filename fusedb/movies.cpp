@@ -15,10 +15,10 @@ mysqlpp::Query connect() {
 
 
 void getMovieListing(std::vector<std::string> &movies) {
-	mysql::Query query = myDB.query();
+	mysqlpp::Query query = myDB.query();
 	query << "SELECT title FROM movies";
 	query.parse();
-	mysql::StoreQueryResult movieList = query.store();
+	mysqlpp::StoreQueryResult movieList = query.store();
 	for(int row = 0; row < movieList.getRowCount(); <row++){
 		std::string title = movieList[row][0].c_str();
 		movies.push_back(title);
@@ -26,15 +26,51 @@ void getMovieListing(std::vector<std::string> &movies) {
 }
 
 void getMovieInfo(const char * path, std::string &buf) {
-	mysql::Query query = myDB.query();
+	mysqlpp::Query query = myDB.query();
 	query << "SELECT * FROM movies";
 	      << "WHERE title = '" <<buf "'";	
-	mysql::StoreQueryResult info = query.store();
+	mysqlpp::StoreQueryResult info = query.store();
 	if(info.isnull()){
 		std::cout << "Sorry the movie you are looking for could not be found." << std::endl;
 	} else{
+		//creating variables associated to table fields
 		int budget = info[0][1];
 		std::string genre = info[0][2].c_str();
+		std::string homepage = info[0][3].c_str();
+		std::string keywords = info[0][5].c_str();
+		std::string oriLang = info[0][6].c_str();
+		std::string oriTitle = info[0][7].c_str();
+		std::string overview = info[0][8].c_str();
+		int popularity = info[0][9];
+		std::string prodCompanies = info[0][10].c_str();
+		std::string prodCountries = info[0][11].c_str();
+		std::string releaseDate = info[0][12].c_str();
+		int revenue = info[0][13];
+		int runtime = info[0][14];
+		std::string spokLang = info[0][15].c_str();
+		std::string tagline = info[0][16].c_str();
+		std::string title = info[0][17].c_str();
+		int voteAvg = info[0][18];
+		int voteCount = info[0][19];		
+
+		//printing out variables
+		std::cout << "Title: " << title << std::endl;
+		std::cout << "Budget: $" << budget << std::endl;
+		std::cout << "HomePage: " << homepage << std::endl;
+		std::cout << "Keywords: " << keywords << std::endl;
+		std::cout << "Original Language: " << oriLang << std::endl;
+		std::cout << "Original Title: " << oriTitle << std::endl;
+		std::cout << "Overview: " << overview << std::endl;
+		std::cout << "Popularity: " << popularity << std::endl;
+		std::cout << "Production Companies: " << prodCompanies << std::endl;
+		std::cout << "Production Countries: " << prodCountries << std::endl;
+		std::cout << "Release Date: " << releaseDate << std::endl;
+		std::cout << "Revenue: " << revenue << std::endl;
+		std::cout << "Runtime: " << runtime << std::endl;
+		std::cout << "Spoken Language: " << spokLang << std::endl;
+		std::cout << "Tagline: " << tagline << std::endl;
+		std::cout << "Vote Average: " << voteAvg << std::endl;
+		std::cout << "Vote Count: " << voteCount << std::endl;
 	}	
 }
 
