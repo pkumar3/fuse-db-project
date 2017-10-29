@@ -19,7 +19,7 @@ void getMovieListing(std::vector<std::string> &movies) {
 	query << "SELECT title FROM movies";
 	query.parse();
 	mysqlpp::StoreQueryResult movieList = query.store();
-	for(int row = 0; row < movieList.getRowCount(); <row++){
+	for(size_t row = 0; row < movieList.size(); row++){
 		std::string title = movieList[row][0].c_str();
 		movies.push_back(title);
 	}	
@@ -27,10 +27,10 @@ void getMovieListing(std::vector<std::string> &movies) {
 
 void getMovieInfo(const char * path, std::string &buf) {
 	mysqlpp::Query query = myDB.query();
-	query << "SELECT * FROM movies";
-	      << "WHERE title = '" <<buf "'";	
+	query << "SELECT * FROM movies"
+	      << "WHERE title = '" << buf << "'";	
 	mysqlpp::StoreQueryResult info = query.store();
-	if(info.isnull()){
+	if(info == NULL){
 		std::cout << "Sorry the movie you are looking for could not be found." << std::endl;
 	} else{
 		//creating variables associated to table fields
