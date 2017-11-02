@@ -179,6 +179,15 @@ int main(int argc, char *argv[]) {
 		printf("Usage: %s <MountPoint>\n", argv[0]);
 		return 1;
 	}
+
+        connect();
+        // Fetch movies list from database and create all of the files.
+        // std::vector<std::string> movies;
+        // getMovieListing(&movies);
+        // for (int i = 0; i < movies.size(); ++i) {
+        //     std::cout << movies[i] << std::endl;
+        // }
+        
 	// Startup the FUSE driver system
 	int retVal = fuse_main(argc, argv, &my_oper, NULL);
 	// Return status back

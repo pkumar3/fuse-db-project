@@ -2,7 +2,10 @@
 header file for movie database
 */
 
+#define MYSQLPP_MYSQL_HEADERS_BURIED
+#include <mysql++/mysql++.h>
 
+mysqlpp::Query connect();
 
 //get listing of movies
 void getMovieListing(std::vector<std::string> &);
