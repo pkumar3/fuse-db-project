@@ -51,7 +51,8 @@ void getMovieInfo(const char * path, std::string &buf) {
 		std::string tagline = info[0][16].c_str();
 		std::string title = info[0][17].c_str();
 		int voteAvg = info[0][18];
-		int voteCount = info[0][19];		
+		int voteCount = info[0][19];
+		std::string comment = info[0][20].c_str();		
 
 		//printing out variables
 		std::cout << "Title: " << title << std::endl;
@@ -71,9 +72,20 @@ void getMovieInfo(const char * path, std::string &buf) {
 		std::cout << "Tagline: " << tagline << std::endl;
 		std::cout << "Vote Average: " << voteAvg << std::endl;
 		std::cout << "Vote Count: " << voteCount << std::endl;
+		std::cout << "Comment: " << comment << std::endl;
 	}	
 }
 
+void addComment(std::string title, std::string comment){
+	mysqlpp::Query query = myDB.query();
+	query << "SELECT title, comment";
+	      << "FROM movies";
+	      << "WHERE title = '"title"'";
+	mysqlpp::StoreQueryResult result = query.store();
+	std::string oldComment = result[0][1];
 
-
+	query << "UPDATE movies";
+	      << "SET comment = '"oldComment + comment"'";
+	      << "WHERE title = '"title"'";
+}
 
