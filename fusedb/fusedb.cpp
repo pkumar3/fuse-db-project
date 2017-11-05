@@ -14,6 +14,9 @@
 
 #include "moviesdb.h"
 
+char dataBuffer[4096];
+int dataBufferSize = 4096;
+
 /** Get's the attribute for a given file or the root directory.
 
   This is a FUSE API function that is used to obtain the file
@@ -105,7 +108,7 @@ int simple_read(const char *path, char *buf, size_t size, off_t offset,
 	if (count > 0) {
 		int i;
 		for(i = 0; (i < count); i++) {
-			buf[i] = 'a';
+			buf[i] = ' ';
 		}
 	}
 	for (unsigned int i=count;i<size;i++)
@@ -124,6 +127,10 @@ int simple_write(const char *path, const char *buf, size_t size, off_t offset,
 	(void) offset;
 	(void) path;
 	// Get the file information for this path
+	dataBufferSize = fmin(size,4096);
+	memcpy(dataBuffer,buf,dataBufferSize);
+	return dataBufferSize;
+	
 	return 0 ;
 }
 
