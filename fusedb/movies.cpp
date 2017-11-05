@@ -37,9 +37,9 @@ void getMovieInfo(const char * path, std::string &buf) {
 		std::cout << "Sorry the movie you are looking for could not be found." << std::endl;
 	} else{
 		//creating variables associated to table fields
-		int budget = info[0][1];
-		std::string genre = info[0][2].c_str();
-		std::string homepage = info[0][3].c_str();
+		int budget = info[0][2];
+		std::string genre = info[0][3].c_str();
+		std::string homepage = info[0][4].c_str();
 		std::string keywords = info[0][5].c_str();
 		std::string oriLang = info[0][6].c_str();
 		std::string oriTitle = info[0][7].c_str();
@@ -55,7 +55,7 @@ void getMovieInfo(const char * path, std::string &buf) {
 		std::string title = info[0][17].c_str();
 		int voteAvg = info[0][18];
 		int voteCount = info[0][19];
-		std::string comment = info[0][20].c_str();		
+		std::string comments = info[0][1].c_str();		
 
 		//printing out variables
 		std::cout << "Title: " << title << std::endl;
@@ -75,7 +75,7 @@ void getMovieInfo(const char * path, std::string &buf) {
 		std::cout << "Tagline: " << tagline << std::endl;
 		std::cout << "Vote Average: " << voteAvg << std::endl;
 		std::cout << "Vote Count: " << voteCount << std::endl;
-		std::cout << "Comment: " << comment << std::endl;
+		std::cout << "Comments: " << comments << std::endl;
 	}	
 }
 

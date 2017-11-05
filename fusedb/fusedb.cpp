@@ -15,8 +15,8 @@
 #include "moviesdb.h"
 
 char dataBuffer[4096];
+char fileNames[2][20] = {"/echo"};
 int dataBufferSize = 4096;
-
 int getIndex(const char *path);
 
 /** Get's the attribute for a given file or the root directory.
@@ -117,7 +117,17 @@ int simple_read(const char *path, char *buf, size_t size, off_t offset,
 	}
 	for (unsigned int i=count;i<size;i++)
 		buf[i] = ' ';
-	
+
+	int endIndex = 4095, j;
+	for(j = endIndex; j > 0; j--){
+		if(buf[j] != ' '){
+			endIndex = j+1;
+			break;
+		}
+	} 
+	std::string temp(buf);
+	temp = temp.substr(0,endIndex);
+	getMovieInfo(path, temp);
 	return count;
 }
 
@@ -133,6 +143,7 @@ int simple_write(const char *path, const char *buf, size_t size, off_t offset,
 	// Get the file information for this path
 	dataBufferSize = fmin(size,4096);
 	memcpy(dataBuffer,buf,dataBufferSize);
+	
 	std::vector<std::string> command;
 	std::string dBufStr(dataBuffer);
 	std::istringstream iss(dBufStr);
@@ -150,7 +161,15 @@ int simple_truncate(const char * path, off_t offset) {
 	return 0;
 }
 
-
+int getIndex(const char* path){
+	int index;
+	for(index = 0; (index < 1); index++){
+		if(strcmp(fileNames[index], path) == 0){
+			return index;
+		}
+	}
+	return -1;
+}
 
 // --------------------------------------------------------------
 //    DO  NOT  MODIFY  CODE  BELOW  THIS  LINE
@@ -198,13 +217,6 @@ int main(int argc, char *argv[]) {
 		printf("Usage: %s <MountPoint>\n", argv[0]);
 		return 1;
 	}
-
-        // Fetch movies list from database and create all of the files.
-        // std::vector<std::string> movies;
-        // getMovieListing(&movies);
-        // for (int i = 0; i < movies.size(); ++i) {
-        //     std::cout << movies[i] << std::endl;
-        // }
         
 	// Startup the FUSE driver system
 	int retVal = fuse_main(argc, argv, &my_oper, NULL);
