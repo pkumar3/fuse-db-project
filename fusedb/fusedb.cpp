@@ -59,6 +59,7 @@ int simple_getattr(const char *path, struct stat *stbuf) {
  */
 int simple_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 		off_t offset, struct fuse_file_info *fi) {
+	connect();
 	// Tell compiler we are intentionally not using 2 parameters
 	(void) offset;
 	(void) fi;
@@ -78,6 +79,7 @@ int simple_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 }
 
 int simple_open(const char *path, struct fuse_file_info *fi) {
+	connect();
 	// Tell compiler we are intentionally not using 1 parameter
 	(void) fi;
 	(void)path;
@@ -91,6 +93,7 @@ int simple_open(const char *path, struct fuse_file_info *fi) {
 
 int simple_read(const char *path, char *buf, size_t size, off_t offset,
 		struct fuse_file_info *fi) {
+	connect();
 	// Tell compiler we are intentionally not using 1 parameter
 	(void) fi;
 	(void) path;
@@ -180,7 +183,6 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-        connect();
         // Fetch movies list from database and create all of the files.
         // std::vector<std::string> movies;
         // getMovieListing(&movies);
