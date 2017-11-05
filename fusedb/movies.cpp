@@ -94,7 +94,7 @@ void addComment(std::string title, std::string comment){
 		      << "SET comment = " << comment
 		      << "WHERE title = " << title
 		      << "ELSE"
-		      << "SET vomment = " << oldComment << "\n\n" << comment
+		      << "SET comment = " << oldComment << "\n\n" << comment
 		      << "WHERE title = " << title;
 	}
 }
