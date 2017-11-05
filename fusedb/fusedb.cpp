@@ -17,6 +17,8 @@
 char dataBuffer[4096];
 int dataBufferSize = 4096;
 
+int getIndex(const char *path);
+
 /** Get's the attribute for a given file or the root directory.
 
   This is a FUSE API function that is used to obtain the file
@@ -87,9 +89,11 @@ int simple_open(const char *path, struct fuse_file_info *fi) {
 	(void) fi;
 	(void)path;
 	// Ensure that the file is valid and is not a directory etc.
+	if(getIndex(path) == -1){
+		return -ENOENT;
+	}
 	// We just logically assume this file to be now open. We don't really
 	// use inode information etc.
-
 	//should validate name of movie that it exists
 	return 0;
 }
@@ -129,9 +133,14 @@ int simple_write(const char *path, const char *buf, size_t size, off_t offset,
 	// Get the file information for this path
 	dataBufferSize = fmin(size,4096);
 	memcpy(dataBuffer,buf,dataBufferSize);
-	return dataBufferSize;
+	std::vector<std::string> command;
+	std::string dBufStr(dataBuffer);
+	std::istringstream iss(dBufStr);
+	for(std::string dBufStr; iss >> dBufStr;)
+		command.push_back(dBufStr);
+	addComment(command[2], command[0]);	
 	
-	return 0 ;
+	return dataBufferSize;
 }
 
 //need to create dummy truncate to make writing happy
