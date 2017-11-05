@@ -81,7 +81,7 @@ void getMovieInfo(const char * path, std::string &buf) {
 
 void addComment(std::string title, std::string comment){
 	mysqlpp::Query query = myDB.query();
-	query << "SELECT title, comment "
+	query << "SELECT title, comments "
 	      << "FROM movies "
 	      << "WHERE title = " << title;
 	mysqlpp::StoreQueryResult result = query.store();
@@ -90,11 +90,11 @@ void addComment(std::string title, std::string comment){
 	} else{
 		std::string oldComment = result[0][1].c_str();
 		query << "UPDATE movies "
-		      << "IF comment IS NULL "
-		      << "SET comment = " << comment
+		      << "IF comments IS NULL "
+		      << "SET comments = " << comment
 		      << " WHERE title = " << title
 		      << " ELSE "
-		      << "SET comment = " << oldComment << "\n\n" << comment
+		      << "SET comments = " << oldComment << "\n\n" << comment
 		      << " WHERE title = " << title;
 	}
 }
