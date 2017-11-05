@@ -30,7 +30,7 @@ void getMovieListing(std::vector<std::string> &movies) {
 
 void getMovieInfo(const char * path, std::string &buf) {
 	mysqlpp::Query query = myDB.query();
-	query << "SELECT * FROM movies"
+	query << "SELECT * FROM movies "
 	      << "WHERE title = " << buf;	
 	mysqlpp::StoreQueryResult info = query.store();
 	if(info == NULL){
@@ -81,21 +81,21 @@ void getMovieInfo(const char * path, std::string &buf) {
 
 void addComment(std::string title, std::string comment){
 	mysqlpp::Query query = myDB.query();
-	query << "SELECT title, comment"
-	      << "FROM movies"
+	query << "SELECT title, comment "
+	      << "FROM movies "
 	      << "WHERE title = " << title;
 	mysqlpp::StoreQueryResult result = query.store();
 	if(result.size() > 1){
 		std::cout << "Sorry we could not find the movie you where lookin for." << std::endl;
 	} else{
 		std::string oldComment = result[0][1].c_str();
-		query << "UPDATE movies"
-		      << "IF comment IS NULL"
+		query << "UPDATE movies "
+		      << "IF comment IS NULL "
 		      << "SET comment = " << comment
-		      << "WHERE title = " << title
-		      << "ELSE"
+		      << " WHERE title = " << title
+		      << " ELSE "
 		      << "SET comment = " << oldComment << "\n\n" << comment
-		      << "WHERE title = " << title;
+		      << " WHERE title = " << title;
 	}
 }
 
