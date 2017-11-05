@@ -89,15 +89,13 @@ void addComment(std::string title, std::string comment){
 		std::cout << "Sorry we could not find the movie you where lookin for." << std::endl;
 	} else{
 		std::string oldComment = result[0][1].c_str();
-		if(oldComment == ""){
-			query << "UPDATE movies"
-			      << "SET comment = "  << comment
-			      << "WHERE title = " << title;
-		} else {
-			query << "UPDATE movies"
-	      	      	      << "SET comment = " << oldComment << "\n" <<  comment
-	   	              << "WHERE title = " << title;
-		}
+		query << "UPDATE movies"
+		      << "IF comment IS NULL"
+		      << "SET comment = " << comment
+		      << "WHERE title = " << title
+		      << "ELSE"
+		      << "SET vomment = " << oldComment << "\n\n" << comment
+		      << "WHERE title = " << title;
 	}
 }
 
