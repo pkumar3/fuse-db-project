@@ -107,4 +107,12 @@ void addComment(std::string title, std::string comment){
 		       << " WHERE title = " << title;
 	}
 }
+bool movieExists(const char path){
+	mysqlpp::Query query = connect();
+	query << "SELECT title FROM movies WHERE = " << path.substr(1);
+	query.parse();
+	mysqlpp::StoreQueryResult res = query.store();
+	return res.empty;
+
+}
 

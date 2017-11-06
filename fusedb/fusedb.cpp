@@ -89,12 +89,9 @@ int simple_open(const char *path, struct fuse_file_info *fi) {
 	(void) fi;
 	
 	// Ensure that the file is valid and is not a directory etc.
-	//if(getIndex(path) == -1){
-	//	return -ENOENT;
-	//}
-	// We just logically assume this file to be now open. We don't really
-	// use inode information etc.
-	//should validate name of movie that it exists
+	if(movieExists(path)){
+		return -ENOENT;
+	} 
 	return 0;
 }
 
