@@ -149,8 +149,13 @@ int simple_write(const char *path, const char *buf, size_t size, off_t offset,
 	std::istringstream iss(dBufStr);
 	for(std::string dBufStr; iss >> dBufStr;)
 		command.push_back(dBufStr);
-	addComment(command[2], command[0]);	
-	
+	int slashIndex = command[2].find_last_of("/");
+	if(slashIndex >= 0){
+		std::string temp = command[2].substr(slashIndex+1);
+		addComment(temp, command[0]);
+	} else{
+		addComment(command[2], command[0]);	
+	}
 	return dataBufferSize;
 }
 
