@@ -18,4 +18,5 @@ void getMovieInfo(const char *,std::string &);
 //param2 = comment
 void addComment(std::string, std::string);
 
+bool movieExists(const char *);
 

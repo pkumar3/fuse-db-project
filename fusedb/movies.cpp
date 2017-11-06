@@ -87,16 +87,14 @@ void getMovieInfo(const char * path, std::string &buf) {
 }
 
 void addComment(std::string title, std::string comment){
-	mysqlpp::Query query = connect;
+	mysqlpp::Query query = connect();
 	mysqlpp::Query query2 = connect();
 	query << "SELECT title, comments "
 	      << "FROM movies "
 	      << "WHERE title = " << title;
 	query.parse();
 	mysqlpp::StoreQueryResult result = query.store();
-	if(result.size() > 1){
-		std::cout << "Sorry we could not find the movie you where lookin for." << std::endl;
-	} else{
+	if(result.size() == 1){
 		std::string oldComment = result[0][1].c_str();
 		query2 << "UPDATE movies "
 		       << "IF comments IS NULL "
@@ -107,12 +105,13 @@ void addComment(std::string title, std::string comment){
 		       << " WHERE title = " << title;
 	}
 }
-bool movieExists(const char path){
+bool movieExists(const char *path){
 	mysqlpp::Query query = connect();
-	query << "SELECT title FROM movies WHERE = " << path.substr(1);
+	std::string title(path);
+	query << "SELECT title FROM movies WHERE = " << title.substr(1);
 	query.parse();
 	mysqlpp::StoreQueryResult res = query.store();
-	return res.empty;
+	return res.empty();
 
 }
 
