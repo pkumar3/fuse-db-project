@@ -103,13 +103,13 @@ int simple_read(const char *path, char *buf, size_t size, off_t offset,
 	connect();
 	// Tell compiler we are intentionally not using 1 parameter
 	(void) fi;
-	(void) path;
+	//(void) path;
 	// Get the file information for this path
 	// Get the information for the file
 	// Copy the necessary information into the buffer
 	std::string temp = "";
 	getMovieInfo(path,temp); 
-	const int count = fmin(4096 - offset, size);
+	const int count = fmin(4096 - offset, temp.size());
 	if (count > 0) {
 		int i;
 		for(i = 0; (i < count); i++) {

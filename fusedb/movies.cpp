@@ -41,7 +41,7 @@ void getMovieInfo(const char * path, std::string &buf) {
 	query.parse();	
 	mysqlpp::StoreQueryResult info = query.store();
 	if(info == NULL){
-		std::cout << "Sorry the movie you are looking for could not be found." << std::endl;
+		buf+= "Sorry the movie you are looking for could not be found.";
 	} else{
 		//creating variables associated to table fields
 		int budget = info[0][2];
