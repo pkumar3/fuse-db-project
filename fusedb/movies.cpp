@@ -18,7 +18,7 @@ mysqlpp::Query connect() {
 
 
 void getMovieListing(std::vector<std::string> &movies) {
-	mysqlpp::Query query = myDB.query();
+	mysqlpp::Query query = connect();
 	query << "SELECT title FROM movies";
 	query.parse();
 	mysqlpp::StoreQueryResult movieList = query.store();
@@ -35,7 +35,7 @@ void getMovieInfo(const char * path, std::string &buf) {
 		name = name.substr(slashIndex+1);
 	}*/	
 
-	mysqlpp::Query query = myDB.query();
+	mysqlpp::Query query = connect();
 	query << "SELECT * FROM movies "
 	      << "WHERE title = " << name.substr(1);
 	query.parse();	
@@ -87,8 +87,8 @@ void getMovieInfo(const char * path, std::string &buf) {
 }
 
 void addComment(std::string title, std::string comment){
-	mysqlpp::Query query = myDB.query();
-	mysqlpp::Query query2 = myDB.query();
+	mysqlpp::Query query = connect;
+	mysqlpp::Query query2 = connect();
 	query << "SELECT title, comments "
 	      << "FROM movies "
 	      << "WHERE title = " << title;

@@ -87,11 +87,11 @@ int simple_open(const char *path, struct fuse_file_info *fi) {
 	connect();
 	// Tell compiler we are intentionally not using 1 parameter
 	(void) fi;
-	(void)path;
+	
 	// Ensure that the file is valid and is not a directory etc.
-	if(getIndex(path) == -1){
-		return -ENOENT;
-	}
+	//if(getIndex(path) == -1){
+	//	return -ENOENT;
+	//}
 	// We just logically assume this file to be now open. We don't really
 	// use inode information etc.
 	//should validate name of movie that it exists
@@ -103,13 +103,16 @@ int simple_read(const char *path, char *buf, size_t size, off_t offset,
 	connect();
 	// Tell compiler we are intentionally not using 1 parameter
 	(void) fi;
-	//(void) path;
+	(void) offset;
+	(void) path;
 	// Get the file information for this path
 	// Get the information for the file
 	// Copy the necessary information into the buffer
+	
 	std::string temp = "";
 	getMovieInfo(path,temp); 
-	const int count = fmin(4096 - offset, temp.size());
+	
+	int count = fmin(4096 - offset, size);
 	if (count > 0) {
 		int i;
 		for(i = 0; (i < count); i++) {
