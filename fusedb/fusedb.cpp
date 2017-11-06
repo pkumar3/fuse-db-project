@@ -107,20 +107,15 @@ int simple_read(const char *path, char *buf, size_t size, off_t offset,
 	// Get the file information for this path
 	// Get the information for the file
 	// Copy the necessary information into the buffer
-	
+	std::string temp = "";
+	getMovieInfo(path,temp); 
 	const int count = fmin(4096 - offset, size);
 	if (count > 0) {
 		int i;
 		for(i = 0; (i < count); i++) {
-			buf[i] = ' ';
+			buf[i] = temp[i];
 		}
 	}
-
-	std::string temp = "";
-	getMovieInfo(path,temp);
-
-	for (unsigned int i=0;i<temp.size();i++)
-		buf[i] = temp[i]; 
  
 	return count;
 }
