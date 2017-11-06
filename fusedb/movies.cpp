@@ -29,9 +29,15 @@ void getMovieListing(std::vector<std::string> &movies) {
 }
 
 void getMovieInfo(const char * path, std::string &buf) {
+	std::string name(path);
+	int slashIndex = name.find_last_of("/");
+	if(slashIndex >= 0){
+		name = name.substr(slashIndex+1);
+	}	
+
 	mysqlpp::Query query = myDB.query();
 	query << "SELECT * FROM movies "
-	      << "WHERE title = " << path;	
+	      << "WHERE title = " << name;	
 	mysqlpp::StoreQueryResult info = query.store();
 	if(info == NULL){
 		std::cout << "Sorry the movie you are looking for could not be found." << std::endl;
@@ -57,7 +63,7 @@ void getMovieInfo(const char * path, std::string &buf) {
 		int voteCount = info[0][19];
 		std::string comments = info[0][1].c_str();		
 
-		//printing out variables
+		//adding vairables to the buffer
 		buf+= "Title: " + title;
 		buf+= "\nBudget: $" + budget;
 		buf+= "\nHomepage: " + homepage;
