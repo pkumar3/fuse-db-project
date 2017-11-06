@@ -30,14 +30,14 @@ void getMovieListing(std::vector<std::string> &movies) {
 
 void getMovieInfo(const char * path, std::string &buf) {
 	std::string name(path);
-	int slashIndex = name.find_last_of("/");
+	/*int slashIndex = name.find_last_of("/");
 	if(slashIndex >= 0){
 		name = name.substr(slashIndex+1);
-	}	
+	}*/	
 
 	mysqlpp::Query query = myDB.query();
 	query << "SELECT * FROM movies "
-	      << "WHERE title = " << name;
+	      << "WHERE title = " << name.substr(1);
 	query.parse();	
 	mysqlpp::StoreQueryResult info = query.store();
 	if(info == NULL){
