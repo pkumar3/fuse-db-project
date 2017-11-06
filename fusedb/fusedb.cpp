@@ -107,7 +107,8 @@ int simple_read(const char *path, char *buf, size_t size, off_t offset,
 	// Get the file information for this path
 	// Get the information for the file
 	// Copy the necessary information into the buffer
-
+	
+	
 	const int count = fmin(4096 - offset, size);
 	if (count > 0) {
 		int i;
@@ -115,19 +116,12 @@ int simple_read(const char *path, char *buf, size_t size, off_t offset,
 			buf[i] = ' ';
 		}
 	}
-	for (unsigned int i=count;i<size;i++)
-		buf[i] = ' ';
+	std::string temp = "";
+	getMovieInfo(path,temp);
 
-	int endIndex = 4095, j;
-	for(j = endIndex; j > 0; j--){
-		if(buf[j] != ' '){
-			endIndex = j+1;
-			break;
-		}
-	} 
-	std::string temp(buf);
-	temp = temp.substr(0,endIndex);
-	getMovieInfo(path, temp);
+	for (unsigned int i=0;i<temp.size();i++)
+		buf[i] = temp[i]; 
+ 
 	return count;
 }
 
@@ -145,14 +139,14 @@ int simple_write(const char *path, const char *buf, size_t size, off_t offset,
 	memcpy(dataBuffer,buf,dataBufferSize);
 	
 	std::vector<std::string> command;
-	std::string dBufStr(dataBuffer);
-	std::istringstream iss(dBufStr);
-	for(std::string dBufStr; iss >> dBufStr;)
-		command.push_back(dBufStr);
+	std::string temp(path);
+	std::istringstream iss(temp);
+	for(std::string temp; iss >> temp;)
+		command.push_back(temp);
 	int slashIndex = command[2].find_last_of("/");
 	if(slashIndex >= 0){
-		std::string temp = command[2].substr(slashIndex+1);
-		addComment(temp, command[0]);
+		std::string title = command[2].substr(slashIndex+1);
+		addComment(title, command[0]);
 	} else{
 		addComment(command[2], command[0]);	
 	}

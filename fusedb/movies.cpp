@@ -31,7 +31,7 @@ void getMovieListing(std::vector<std::string> &movies) {
 void getMovieInfo(const char * path, std::string &buf) {
 	mysqlpp::Query query = myDB.query();
 	query << "SELECT * FROM movies "
-	      << "WHERE title = " << buf;	
+	      << "WHERE title = " << path;	
 	mysqlpp::StoreQueryResult info = query.store();
 	if(info == NULL){
 		std::cout << "Sorry the movie you are looking for could not be found." << std::endl;
@@ -58,24 +58,24 @@ void getMovieInfo(const char * path, std::string &buf) {
 		std::string comments = info[0][1].c_str();		
 
 		//printing out variables
-		std::cout << "Title: " << title << std::endl;
-		std::cout << "Budget: $" << budget << std::endl;
-		std::cout << "HomePage: " << homepage << std::endl;
-		std::cout << "Keywords: " << keywords << std::endl;
-		std::cout << "Original Language: " << oriLang << std::endl;
-		std::cout << "Original Title: " << oriTitle << std::endl;
-		std::cout << "Overview: " << overview << std::endl;
-		std::cout << "Popularity: " << popularity << std::endl;
-		std::cout << "Production Companies: " << prodCompanies << std::endl;
-		std::cout << "Production Countries: " << prodCountries << std::endl;
-		std::cout << "Release Date: " << releaseDate << std::endl;
-		std::cout << "Revenue: " << revenue << std::endl;
-		std::cout << "Runtime: " << runtime << std::endl;
-		std::cout << "Spoken Language: " << spokLang << std::endl;
-		std::cout << "Tagline: " << tagline << std::endl;
-		std::cout << "Vote Average: " << voteAvg << std::endl;
-		std::cout << "Vote Count: " << voteCount << std::endl;
-		std::cout << "Comments: " << comments << std::endl;
+		buf+= "Title: " + title;
+		buf+= "\nBudget: $" + budget;
+		buf+= "\nHomepage: " + homepage;
+		buf+= "\nKeywords: " + keywords;
+		buf+= "\nOriginal Language: " + oriLang;
+		buf+= "\nOriginal Title: " + oriTitle;
+		buf+= "\nOverview: " + overview;
+		buf+= "\nPopularity: " + popularity;
+		buf+= "\nProduction Companies: " + prodCompanies;
+		buf+= "\nProduction Countries: " + prodCountries;
+		buf+= "\nRelease Date: " +  releaseDate;
+		buf+= "\nRevenue: $" + revenue;
+		buf+= "\nRuntime: " + runtime;
+		buf+= "\nSpoken Language: " + spokLang;
+		buf+= "\nTagline: " + tagline;
+		buf+= "\nVote Average: " + voteAvg;
+		buf+= "\nVote Count: " + voteCount;
+		buf+= "\nComments: " + comments;
 	}	
 }
 
